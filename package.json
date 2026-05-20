@@ -1,11 +1,17 @@
-{
-  "name": "barry-gon-bot",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": { "start": "node index.js" },
-  "dependencies": {
-    "express": "^4.18.2",
-    "axios": "^1.6.0",
-    "googleapis": "^140.0.0"
+app.post("/webhook", async function(req, res) {
+  res.sendStatus(200);
+  try {
+    var body = req.body;
+    if (!body.entry || !body.entry[0]) return;
+    var changes = body.entry[0].changes;
+    if (!changes || !changes[0]) return;
+    var value = changes[0].value;
+    if (!value || !value.messages || !value.messages[0]) return;
+    var msg = value.messages[0];
+    if (msg.type === "text") {
+      await handleMessage(msg.from, msg.text.body);
+    }
+  } catch (err) {
+    console.error("Webhook error:", err.message);
   }
-}
+});
