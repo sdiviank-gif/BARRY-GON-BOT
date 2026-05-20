@@ -69,8 +69,8 @@ Respond in this JSON format only, no extra text:
 User message: ${userMessage}`;
 
 const response = await axios.post(
-`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${CONFIG.GEMINI_API_KEY}`,
-{ contents: [{ parts: [{ text: prompt }] }] }
+  https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${CONFIG.GEMINI_API_KEY},
+  { contents: [{ parts: [{ text: prompt }] }] }
 );
 
 const raw = response.data.candidates[0].content.parts[0].text;
