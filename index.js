@@ -18,6 +18,14 @@ GEMINI_API_KEY: "AIzaSyA1CW3wmWW7ar7zkv4aA-vQtdutdNC8vxI",
 };
 
 async function getSheet(tabName) {
+const doc = new GoogleSpreadsheet(CONFIG.SPREADSHEET_ID);
+await doc.useServiceAccountAuth({
+client_email: CONFIG.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+private_key: CONFIG.GOOGLE_PRIVATE_KEY,
+});
+await doc.loadInfo();
+return doc.sheetsByTitle[tabName];
+}
 const auth = new JWT({
 email: CONFIG.GOOGLE_SERVICE_ACCOUNT_EMAIL,
 key: CONFIG.GOOGLE_PRIVATE_KEY,
